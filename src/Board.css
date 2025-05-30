@@ -1,0 +1,16 @@
+
+.game-board {
+    width: 400px;
+    height: 400px;
+    border: 2px solid black;
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20,1fr);
+    background-color: #f0f0f0;
+}
+
+.cell {
+    border: 1px solid #ccc;
+    background-color: white;
+}
+
