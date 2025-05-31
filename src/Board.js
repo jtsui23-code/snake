@@ -7,6 +7,8 @@ function Board() {
     const cols = 20;
     const cells = [];
 
+    const [gameOver, setGameOver] = useState(false);
+
     
     const [snake, setSnake] = useState([{row:3, col: 3}]);
 
@@ -46,31 +48,51 @@ function Board() {
 
     useEffect(() => {
 
+        if (gameOver){
+            return;
+        }
+
         const moveSnake = () => {
 
             setSnake(oldSnake => {
                 const currentHead = oldSnake[0];
                 let newHead;
+                let tempHead;
 
                 if( direction === 'UP'){
-                    newHead = {... currentHead, row: currentHead.row-1}
+                    tempHead = {... currentHead, row: currentHead.row-1}
+                    if (tempHead.row < 20 && tempHead.row >= 0){
+                        newHead = tempHead;
+                    }
 
                 } else if ( direction === 'DOWN') {
 
-                    newHead = {... currentHead, row: currentHead.row +1}
+                    tempHead = {... currentHead, row: currentHead.row +1}
+                    if (tempHead.row < 20 && tempHead.row >= 0){
+                        newHead = tempHead;
+                    }
 
                 } else if (direction === 'RIGHT') {
 
-                    newHead = {... currentHead, col:currentHead.col+1}
+                    tempHead = {... currentHead, col:currentHead.col+1}
+                    if (tempHead.col < 20 && tempHead.col >= 0){
+                        newHead = tempHead;
+                    }
                 
                 } else if (direction === 'LEFT'){
 
-                    newHead = {... currentHead, col: currentHead.col -1}
+                    tempHead = {... currentHead, col: currentHead.col -1}
+                    if (tempHead.col < 20 && tempHead.col >= 0){
+                        newHead = tempHead;
+                    }
+
                 }
 
                 if (newHead){
                     return [newHead];
                 } else {
+
+                    setGameOver(true);
                     return oldSnake;
                 }
 
