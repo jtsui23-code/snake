@@ -17,3 +17,7 @@
 .snake-cell {
  background-color: green;
 }
+
+.food-cell {
+    background-color: red;
+}

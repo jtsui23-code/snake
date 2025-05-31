@@ -2,10 +2,28 @@ import React from 'react';
 import './Board.css';
 import {useState, useEffect} from 'react';
 
+
+
 function Board() {
     const rows = 20;
     const cols = 20;
     const cells = [];
+    
+    const [food, setFood] = useState(getRandomPosition());
+
+
+
+    function getRandomPosition() {
+
+        // Math.floor rounds the value to a whole number
+        const randomRow = Math.floor(Math.random() * rows); // Randomly selects row from 0-19 becuase rows = 20
+        const randomCol = Math.floor(Math.random() * cols); // Randly selects col from 0-19 because cols = 20
+
+        return {row: randomRow, col:randomCol};
+    }
+
+
+
 
     const [gameOver, setGameOver] = useState(false);
 
@@ -63,6 +81,8 @@ function Board() {
                     tempHead = {... currentHead, row: currentHead.row-1}
                     if (tempHead.row < 20 && tempHead.row >= 0){
                         newHead = tempHead;
+
+                        
                     }
 
                 } else if ( direction === 'DOWN') {
@@ -88,6 +108,12 @@ function Board() {
 
                 }
 
+
+                if (newHead.row === food.row && newHead.col === food.col) {
+                    tempHead = {newHead, ... oldSnake}
+                    newHead = tempHead;
+                }
+
                 if (newHead){
                     return [newHead];
                 } else {
@@ -110,6 +136,9 @@ function Board() {
             if (r === snake[0].row &&  c === snake[0].col) {
 
                 cells.push(<div key={`${r}-${c}`} className="cell snake-cell"></div>);
+            } else if (r === food.row && c === food.col) {
+
+                cells.push(<div key={`${r}-${c}`} className="cell food-cell"></div>);
             }
             else {
                 
